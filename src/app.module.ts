@@ -8,14 +8,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({ 
       type: 'postgres',
-      host: 'localhost',
+      host: 'db',
       port: 5432, 
       username: 'postgres',
       password: '1234',
       database: 'postgres',
       migrations: ["dist/migrations/*{.ts,.js}"],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
     PokemonsModule
   ],
