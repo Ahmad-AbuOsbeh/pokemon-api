@@ -8,10 +8,10 @@ export class Pokemon {
     @Column()
     name: string;
 
-    @Column()
-    pokdexNumer: number;
+    @Column({nullable: true})
+    pokdexNumber: number;
 
-    @Column()
+    @Column({nullable: true})
     generation: number;
 
     @Column({nullable: true})
@@ -23,10 +23,10 @@ export class Pokemon {
     @Column({nullable: true})
     familyID: number;
 
-    @Column()
+    @Column({nullable: true})
     type: string;
 
-    @Column()
+    @Column({nullable: true})
     weather: string;
 
     @Column({nullable: true})

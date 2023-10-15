@@ -6,7 +6,7 @@ export class CreatePokemonDto {
    readonly  name: string;
 
    @IsNumber()
-   readonly pokdexNumer: number;
+   readonly pokdexNumber: number;
 
    @IsNumber()
    readonly generation: number;
