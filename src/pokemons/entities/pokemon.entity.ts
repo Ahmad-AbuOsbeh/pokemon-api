@@ -14,13 +14,13 @@ export class Pokemon {
     @Column()
     generation: number;
 
-    @Column()
+    @Column({nullable: true})
     evolutionStage: string;
 
-    @Column()
+    @Column({nullable: true})
     evolved: number;
 
-    @Column()
+    @Column({nullable: true})
     familyID: number;
 
     @Column()
@@ -29,6 +29,6 @@ export class Pokemon {
     @Column()
     weather: string;
 
-    @Column()
+    @Column({nullable: true})
     statTotal: number;
 };

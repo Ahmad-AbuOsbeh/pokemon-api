@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
+import { Pokemon } from './entities/pokemon.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PokemonsService {
-  create(createPokemonDto: CreatePokemonDto) {
-    return 'This action adds a new pokemon';
+  constructor(
+    @InjectRepository(Pokemon)
+    private readonly pokemonRepository :Repository<Pokemon>
+    ){}
+
+  async create( createPokemonDto: CreatePokemonDto) {    
+    const pokemon = this.pokemonRepository.create(createPokemonDto)
+    return this.pokemonRepository.save(pokemon);
   }
 
-  findAll() {
-    return `This action returns all pokemons`;
+  async findAll(): Promise<Pokemon[]>{
+    return await this.pokemonRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pokemon`;
+  async findOne( id: number) : Promise<Pokemon>{
+    const pokemon = await this.pokemonRepository.findOne({
+      where:{id}
+    });
+
+    if (!pokemon) {
+      throw new NotFoundException(`This pokemon : ${id} not found`);
+    }
+    return pokemon;
   }
 
-  update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+  async update(id: number, updatePokemonDto: UpdatePokemonDto) {
+    const updatePokemon = await this.pokemonRepository.preload({
+      id: id,
+      ...updatePokemonDto})
+    if (!updatePokemon) {
+    throw new NotFoundException(`This Pokemon : ${id} not found`);
+    }
+    return this.pokemonRepository.save(updatePokemon);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+  async remove(id: number) {
+    await this.pokemonRepository.delete(id);
   }
 }
