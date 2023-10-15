@@ -1,73 +1,207 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Pokemon API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
+This is an API that supports CRUD operations for `Pokemon` data, these data imported from Microsoft Excel file into a separate database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## How to start
 
-## Description
+- clone repository
+- run `docker-compose up`
+- You should be able to get it running on `http://localhost:8080`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technologies
 
-## Installation
+- Node.js
+- Nest.js
+- TypeORM
+- PostgreSQL
 
-```bash
-$ npm install
-```
+## APIs
 
-## Running the app
+#### 1- Get all Pokemons
+    - Endpoint: `http://localhost:8080/pokemons`,
+    - Method: `GET`,
+    - QueryStrings:
+      - `search`: Search by name, type, and weather,
+      - `filter`: Filter by type, weather, familyId, and generation,
+      - `limit`: Records limit for pagination,
+      - `page`: Page number for pagination,
+  
+  - Example:
 
-```bash
-# development
-$ npm run start
+  ```javascript
+  //Request URL:
+  "http://localhost:8080/pokemons?search=be&type=normal&page=1&limit=20"
 
-# watch mode
-$ npm run start:dev
+  //Response:
+  [
+    {
+        "id": 4058,
+        "name": "Trumbeak",
+        "pokdexNumber": 732,
+        "generation": 7,
+        "evolutionStage": null,
+        "evolved": 0,
+        "familyID": 0,
+        "type": "normal",
+        "weather": "Partly cloudy",
+        "statTotal": 369
+    },
+    {
+        "id": 4086,
+        "name": "Bewear",
+        "pokdexNumber": 760,
+        "generation": 7,
+        "evolutionStage": "Lower",
+        "evolved": 0,
+        "familyID": 0,
+        "type": "normal",
+        "weather": "Partly cloudy",
+        "statTotal": 616
+    }
+  ]
 
-# production mode
-$ npm run start:prod
-```
+  ```
 
-## Test
+#### 2- Get By ID
+    - Endpoint: `http://localhost:8080/pokemons/:id`,
+    - Method: `GET`
+    - Params: `id`
+  
+  - Example:
 
-```bash
-# unit tests
-$ npm run test
+  ```javascript
+  //Request URL:
+  "http://localhost:8080/pokemons/4000"
 
-# e2e tests
-$ npm run test:e2e
+  //Response:
+  {
+      "id": 4000,
+      "name": "Pancham",
+      "pokdexNumber": 674,
+      "generation": 6,
+      "evolutionStage": null,
+      "evolved": 0,
+      "familyID": 0,
+      "type": "fighting",
+      "weather": "Cloudy",
+      "statTotal": 392
+  }
 
-# test coverage
-$ npm run test:cov
-```
+  ```
 
-## Support
+#### 3- Create Pokemon
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+    - Endpoint: `http://localhost:8080/pokemons`,
+    - Method: `POST`
+    - Body:
+      - "name": "New Pancham", [string] //required
+      - "pokdexNumber": 674, [number] //required
+      - "generation": 6, [number] //required
+      - "evolutionStage": null, [string]
+      - "evolved": 0, [number]
+      - "familyID": 0, [number]
+      - "type": "fighting", [string] //required
+      - "weather": "Cloudy", [string] //required
+      - "statTotal": 392 [number]
+  
+  - Example:
 
-## Stay in touch
+  ```javascript
+  //Request URL:
+  "http://localhost:8080/pokemons"
+  //Body
+    {
+      "name": "New Pancham",
+      "pokdexNumber": 674,
+      "generation": 6,
+      "evolutionStage": null,
+      "evolved": 0,
+      "familyID": 0,
+      "type": "fighting",
+      "weather": "Cloudy",
+      "statTotal": 392
+  }
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  //Response:
+  {
+      "name": "New Pancham",
+      "pokdexNumber": 674,
+      "generation": 6,
+      "evolutionStage": null,
+      "evolved": 0,
+      "familyID": 0,
+      "type": "fighting",
+      "weather": "Cloudy",
+      "statTotal": 392,
+      "id": 4129
+  }
 
-## License
+  ```
 
-Nest is [MIT licensed](LICENSE).
+#### 4- Update Pokemon
+
+    - Endpoint: `http://localhost:8080/pokemons/:id`,
+    - Method: `PATCH`
+    - Params: `id`
+    - Body:
+      - "name": "New Pancham - Updated", [string] //required
+      - "pokdexNumber": 674, [number] //required
+      - "generation": 6, [number] //required
+      - "evolutionStage": null, [string]
+      - "evolved": 0, [number]
+      - "familyID": 0, [number]
+      - "type": "fighting", [string] //required
+      - "weather": "Cloudy", [string] //required
+      - "statTotal": 392 [number]
+  
+  - Example:
+
+  ```javascript
+  //Request URL:
+  "http://localhost:8080/pokemons/4129"
+  //Body
+    {
+      "name": "New Pancham - Updated",
+      "pokdexNumber": 674,
+      "generation": 6,
+      "evolutionStage": null,
+      "evolved": 0,
+      "familyID": 0,
+      "type": "fighting",
+      "weather": "Cloudy",
+      "statTotal": 392
+  }
+
+  //Response:
+  {
+      "name": "New Pancham",
+      "pokdexNumber": 674,
+      "generation": 6,
+      "evolutionStage": null,
+      "evolved": 0,
+      "familyID": 0,
+      "type": "fighting",
+      "weather": "Cloudy",
+      "statTotal": 392,
+      "id": 4129
+  }
+
+  ```
+
+#### 5- Delete Pokemon
+
+    - Endpoint: `http://localhost:8080/pokemons/:id`,
+    - Method: `DELETE`
+    - Params: `id`
+  
+  - Example:
+
+  ```javascript
+  //Request URL:
+  "http://localhost:8080/pokemons/4129"
+
+  //Response:
+  1 //status: 200 OK
+
+  ```
