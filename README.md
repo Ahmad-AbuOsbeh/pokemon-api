@@ -9,6 +9,12 @@ This is an API that supports CRUD operations for `Pokemon` data, these data impo
 - run `docker-compose up`
 - You should be able to get it running on `http://localhost:8080`
 
+## Run Migrations
+
+- run `npm run migration:generate` or `npm run migration:create`
+- then run `npm run migration:run`
+- You should be able to see the data into your Docker database.
+
 ## Technologies
 
 - Node.js
