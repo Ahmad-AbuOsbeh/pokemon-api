@@ -3,7 +3,7 @@ import { DataSource, DataSourceOptions } from "typeorm";
 
 const config = {
     type: 'postgres',
-    host: "db",
+    host: "localhost",
     port: 5432,
     username: "postgres",
     password: "1234",
@@ -12,7 +12,7 @@ const config = {
     migrations: ["dist/migrations/*{.ts,.js}"],
     migrationsTableName: "pokemon",
     autoLoadEntities: true,
-    synchronize: false,
+    synchronize: true,
 }
 
 export default registerAs('typeorm', () => config)

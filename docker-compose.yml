@@ -1,17 +1,17 @@
-version: '3.0'
-
+version: '3'
 services:
-  pokemon-api:
-    image: pokemon-api
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    volumes:
-      - .:/app
+    environment:
+      NODE_ENV: development
   db:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: "1234"
     ports:
-      - 5432:5432
+      - "5432:5432"
