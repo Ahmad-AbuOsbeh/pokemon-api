@@ -11,7 +11,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forRoot({ 
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      migrations: ["dist/migrations/*{.ts,.js}"],
+      migrations: ["src/migrations/*{.ts,.js}"],
       autoLoadEntities: true,
       synchronize: true,
     }),

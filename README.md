@@ -11,7 +11,9 @@ This is an API that supports CRUD operations for `Pokemon` data, these data impo
 
 ## Run Migrations
 
-- run `npm run migration:generate` or `npm run migration:create`
+- run `npm i` on your machine locally.
+- run `npm run migration:run` (since migration file already generated)
+- If not, run `npm run migration:generate` or `npm run migration:create`
 - then run `npm run migration:run`
 - You should be able to see the data into your Docker database.
 

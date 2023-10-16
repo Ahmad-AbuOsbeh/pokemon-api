@@ -8,8 +8,8 @@ const config = {
     username: "user",
     password: "pass1234",
     database: "db",
-    entities: ["dist/**/*.entity{.ts,.js}"],
-    migrations: ["dist/migrations/*{.ts,.js}"],
+    entities: ["src/**/*.entity{.ts,.js}"],
+    migrations: ["src/migrations/*{.ts,.js}"],
     migrationsTableName: "pokemon",
     autoLoadEntities: true,
     synchronize: true
