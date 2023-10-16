@@ -1,17 +1,23 @@
-version: '3'
+version: "3.8"
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      NODE_ENV: development
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: "1234"
-    ports:
-      - "5432:5432"
+    api:
+        build:
+            dockerfile: Dockerfile
+            context: .
+        depends_on: 
+            - postgres
+        environment: 
+            DATABASE_URL: postgres://user:pass1234@postgres:5432/db
+            NODE_ENV: development
+            PORT: 8080
+        ports:
+            - "8080:8080"
+
+    postgres:
+        image: postgres:10.4
+        ports:
+            - "5432:5432"
+        environment: 
+            POSTGRES_USER: user
+            POSTGRES_PASSWORD: pass1234
+            POSTGRES_DB: db

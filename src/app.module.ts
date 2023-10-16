@@ -3,19 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PokemonsModule } from './pokemons/pokemons.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({ 
       type: 'postgres',
-      host: 'db',
-      port: 5432, 
-      username: 'postgres',
-      password: '1234',
-      database: 'postgres',
+      url: process.env.DATABASE_URL,
       migrations: ["dist/migrations/*{.ts,.js}"],
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: true,
     }),
     PokemonsModule
   ],
